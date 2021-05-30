@@ -81,6 +81,10 @@ app.get('/api/urls/:id', async (req, res) => {
 
   try {
     const record = await ShortURL.findById(id);
+    if (!record) {
+      const msg = 'URL with given short code not found';
+      return res.status(400).json({ error: msg, success: false });
+    }
     return res.json({ record, success: true });
   } catch (err) {
     const msg = 'Something went wrong on server';
