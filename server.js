@@ -27,11 +27,11 @@ mongoose
   });
 
 app.get('/', (req, res) => {
-  res.send('hello world');
+  res.send('Node.js URL Shortener API');
 });
 
 app.post(
-  '/urls',
+  '/api/urls',
   [
     check('shortCode', 'Short code is required').not().isEmpty(),
     check('longUrl', 'Long URL is required').not().isEmpty(),
@@ -71,12 +71,12 @@ app.post(
   }
 );
 
-app.get('/urls', async (req, res) => {
+app.get('/api/urls', async (req, res) => {
   const records = await ShortURL.find({});
   res.json({ records, success: true });
 });
 
-app.get('/urls/:id', async (req, res) => {
+app.get('/api/urls/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
