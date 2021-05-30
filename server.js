@@ -2,7 +2,7 @@ const express = require('express');
 const { check, validationResult } = require('express-validator');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const { DB_URI } = require('./config/db');
+const { DB_URI } = require('./config');
 const ShortURL = require('./models/ShortURL');
 
 const app = express();
