@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
   res.send('Node.js URL Shortener API');
 });
 
+// add new record to db
 app.post(
   '/api/urls',
   [
@@ -71,11 +72,13 @@ app.post(
   }
 );
 
+// get all records
 app.get('/api/urls', async (req, res) => {
   const records = await ShortURL.find({});
   res.json({ records, success: true });
 });
 
+// get a record from db
 app.get('/api/urls/:id', async (req, res) => {
   const { id } = req.params;
 
@@ -85,6 +88,24 @@ app.get('/api/urls/:id', async (req, res) => {
       const msg = 'URL with given short code not found';
       return res.status(400).json({ error: msg, success: false });
     }
+    return res.json({ record, success: true });
+  } catch (err) {
+    const msg = 'Something went wrong on server';
+    return res.status(400).json({ error: msg, success: false });
+  }
+});
+
+// delete a record from db
+app.delete('/api/urls/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const record = await ShortURL.findById(id);
+    if (!record) {
+      const msg = 'URL with given short code not found';
+      return res.status(400).json({ error: msg, success: false });
+    }
+    await record.delete();
     return res.json({ record, success: true });
   } catch (err) {
     const msg = 'Something went wrong on server';
