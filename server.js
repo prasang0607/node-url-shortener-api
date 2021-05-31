@@ -74,7 +74,7 @@ app.post(
 
 // get all records
 app.get('/api/urls', async (req, res) => {
-  const records = await ShortURL.find({});
+  const records = await ShortURL.find({}).sort({ createdAt: -1 });
   res.json({ records, success: true });
 });
 
